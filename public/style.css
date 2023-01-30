@@ -4,18 +4,31 @@ body {
     overflow: overlay;
 }
 
-.center {
+#stream {
+    position: absolute;
+    width: 100%;
+    filter: brightness(0.5);
+    filter: blur(0.25rem);
+}
+
+#overlay-outer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.absolute {
-    position: absolute;
+#overlay-inner {
+    padding: 2rem;
+    border-radius: 0.5rem;
+    background-color: black;
 }
 
-#stream {
+#streamBtn {
     width: 100%;
-    filter: brightness(0.5);
-    filter: blur(2px);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: none;
 }

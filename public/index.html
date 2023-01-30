@@ -6,14 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WebRTCast Host</title>
         <script src="https://cdn.jsdelivr.net/npm/peerjs@1.4.7/dist/peerjs.min.js"></script>
-        <script defer src="host.js"></script>
-        <link href="style.css" rel="stylesheet" />
+        <script defer src="./host.js"></script>
+        <link href="./style.css" rel="stylesheet" />
     </head>
     <body>
-        <video id="stream" class="absolute" autoplay></video>
-        <div class="absolute center" style="width: 100%; height: 100%">
-            <div>
+        <video id="stream" autoplay></video>
+        <div id="overlay-outer">
+            <div id="overlay-inner">
                 <button id="streamBtn">Start Stream</button>
+                <br /><br />
                 <div id="peerId">Peer id:</div>
                 <div id="wsStatus">WebSocket:</div>
             </div>

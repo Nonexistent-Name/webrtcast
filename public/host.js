@@ -5,16 +5,17 @@ const streamDisplay = document.getElementById('stream');
 
 streamBtn.addEventListener('click', async () => {
     streamDisplay.srcObject = await navigator.mediaDevices.getDisplayMedia();
+    streamBtn.disabled = true;
 });
 
 let socket;
 const wsConnect = () => {
     socket = new WebSocket('ws://localhost:1420');
 
-    socket.addEventListener('open', event => {
+    socket.addEventListener('open', () => {
         wsStatus.innerText = 'WebSocket: Connected';
 
-        socket.addEventListener('close', event => {
+        socket.addEventListener('close', () => {
             wsStatus.innerText = 'WebSocket: Reconnecting';
             wsConnect();
         });
