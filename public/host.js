@@ -27,9 +27,7 @@ const wsConnect = () => {
 };
 wsConnect();
 
-const peer = new Peer(
-    'MMCqiivJsASUtoprwsNHdk2PsKtGVbZ3T3gikoHbvM43vB5mQSyFPoRGEzooLz8a'
-);
+const peer = new Peer();
 peer.on('open', id => {
     peerId.innerText = `Peer id: ${id}`;
 });

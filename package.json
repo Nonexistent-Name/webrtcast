@@ -1,18 +1,19 @@
 {
   "name": "webrtcast",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "author": "Nonexistent-Name",
+  "license": "ISC",
+  "main": "server.js",
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "node ./index.js"
+    "dev": "nodemon ./server.js",
+    "start": "node ./server.js"
   },
   "dependencies": {
+    "robotjs": "0.6.0",
     "ws": "^8.12.0"
   },
-  "author": "Nonexistent-Name",
-  "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.20"
   }
