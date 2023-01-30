@@ -2,6 +2,7 @@ body {
     font-family: sans-serif;
     margin: 0;
     overflow: overlay;
+    background-color: black;
 }
 
 #stream {
@@ -21,14 +22,25 @@ body {
 }
 
 #overlay-inner {
+    color: white;
     padding: 2rem;
     border-radius: 0.5rem;
-    background-color: black;
+    background-color: rgb(39, 39, 39);
 }
 
 #streamBtn {
+    color: white;
     width: 100%;
+    font-size: 1rem;
     padding: 1rem;
     border-radius: 0.5rem;
-    border: none;
+    border: 0.25rem solid white;
+    background-color: transparent;
+    transition: background-color 0.25s, color 0.25s;
+    cursor: pointer;
+}
+
+#streamBtn:hover {
+    background-color: white;
+    color: black;
 }

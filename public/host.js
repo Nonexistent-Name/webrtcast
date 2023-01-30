@@ -4,8 +4,10 @@ const wsStatus = document.getElementById('wsStatus');
 const streamDisplay = document.getElementById('stream');
 
 streamBtn.addEventListener('click', async () => {
+    if (streamBtn.innerText === 'Stop Streaming') location.reload();
+
     streamDisplay.srcObject = await navigator.mediaDevices.getDisplayMedia();
-    streamBtn.disabled = true;
+    streamBtn.innerText = 'Stop Streaming';
 });
 
 let socket;
@@ -30,7 +32,7 @@ wsConnect();
 
 const peer = new Peer();
 peer.on('open', id => {
-    peerId.innerText = `Peer id: ${id}`;
+    peerId.innerText = id;
 });
 peer.on('connection', conn => {
     conn.on('open', async () => {
