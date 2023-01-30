@@ -65,7 +65,10 @@
                     console.log('Input connection established');
 
                     addEventListener('keyup', event => {
-                        conn.send({ type: 'key', key: event.key.toLowerCase() });
+                        conn.send({
+                            type: 'key',
+                            key: event.key.toLowerCase(),
+                        });
                     });
                 });
             });
