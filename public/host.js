@@ -1,5 +1,5 @@
 const streamBtn = document.getElementById('streamBtn');
-const peerId = document.getElementById('peerId');
+const peerIdText = document.getElementById('peerId');
 const wsStatus = document.getElementById('wsStatus');
 const streamDisplay = document.getElementById('stream');
 
@@ -32,16 +32,20 @@ wsConnect();
 
 const peer = new Peer();
 peer.on('open', id => {
-    peerId.innerText = id;
+    peerIdText.innerText = id;
 });
 peer.on('connection', conn => {
     conn.on('open', async () => {
         console.log('Input connection established');
 
-        const call = peer.call(conn.peer, streamDisplay.srcObject);
+        peer.call(conn.peer, streamDisplay.srcObject);
     });
 
     conn.on('data', data => {
         socket.send(JSON.stringify(data));
     });
+});
+
+peerId.addEventListener('click', () => {
+    navigator.clipboard.writeText(peerId.innerText);
 });

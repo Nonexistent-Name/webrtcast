@@ -44,3 +44,17 @@ body {
     background-color: white;
     color: black;
 }
+
+#peerId {
+    border: none;
+    padding: 0;
+    background: none;
+    color: white;
+    font-size: 1rem;
+    font-family: monospace;
+    cursor: pointer;
+}
+
+#peerId:hover {
+    text-decoration: underline;
+}
