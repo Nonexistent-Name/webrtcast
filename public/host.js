@@ -3,11 +3,20 @@ const peerIdText = document.getElementById('peerId');
 const wsStatus = document.getElementById('wsStatus');
 const streamDisplay = document.getElementById('stream');
 
+let streaming = false;
+const updateBtnText = () => {
+    streamBtn.innerText = streaming ? 'Stop Streaming' : 'Start Stream';
+};
+
 streamBtn.addEventListener('click', async () => {
-    if (streamBtn.innerText === 'Stop Streaming') location.reload();
+    if (streaming) {
+        location.reload();
+        return;
+    }
 
     streamDisplay.srcObject = await navigator.mediaDevices.getDisplayMedia();
-    streamBtn.innerText = 'Stop Streaming';
+    streaming = true;
+    updateBtnText();
 });
 
 let socket;
@@ -30,20 +39,22 @@ const wsConnect = () => {
 };
 wsConnect();
 
-const peer = new Peer();
+const peer = new Peer('amongussussybaka');
+
 peer.on('open', id => {
     peerIdText.innerText = id;
 });
+
 peer.on('connection', conn => {
+    console.log('New connection');
+
     conn.on('open', async () => {
-        console.log('Input connection established');
+        console.log('Connection established, sending stream');
 
         peer.call(conn.peer, streamDisplay.srcObject);
     });
 
-    conn.on('data', data => {
-        socket.send(JSON.stringify(data));
-    });
+    conn.on('data', data => socket.send(JSON.stringify(data)));
 });
 
 peerId.addEventListener('click', () => {
