@@ -1,62 +1,84 @@
-const streamBtn = document.getElementById('streamBtn');
+const video = document.getElementById('video');
+
+const captureBtn = document.getElementById('captureBtn');
+
+const peerInput = document.getElementById('peerInput');
+const peerPlaceholder = document.getElementById('peerPlaceholder');
 const peerIdText = document.getElementById('peerId');
-const wsStatus = document.getElementById('wsStatus');
-const streamDisplay = document.getElementById('stream');
 
-let streaming = false;
-const updateBtnText = () => {
-    streamBtn.innerText = streaming ? 'Stop Streaming' : 'Start Stream';
-};
-
-streamBtn.addEventListener('click', async () => {
-    if (streaming) {
-        location.reload();
-        return;
-    }
-
-    streamDisplay.srcObject = await navigator.mediaDevices.getDisplayMedia();
-    streaming = true;
-    updateBtnText();
-});
+const wsStatusText = document.getElementById('wsStatus');
+const wsReconnectBtn = document.getElementById('wsReconnect');
 
 let socket;
+
 const wsConnect = () => {
     socket = new WebSocket('ws://localhost:1420');
 
     socket.addEventListener('open', () => {
-        wsStatus.innerText = 'WebSocket: Connected';
+        wsStatusText.innerText = 'Connected';
+        wsReconnectBtn.style.display = 'none';
 
         socket.addEventListener('close', () => {
-            wsStatus.innerText = 'WebSocket: Reconnecting';
-            wsConnect();
+            wsStatusText.innerText = 'Disconnected';
+            setTimeout(wsReconnect, 1000);
         });
+    });
 
-        socket.addEventListener('error', event => {
-            console.error(event);
-            wsStatus.innerText = 'WebSocket: Error';
-        });
+    socket.addEventListener('error', () => {
+        wsStatusText.innerText = 'Error';
+        wsReconnectBtn.style.display = 'revert';
     });
 };
+
+const wsReconnect = () => {
+    wsStatusText.innerText = 'Reconnecting';
+    wsReconnectBtn.style.display = 'none';
+    wsConnect();
+};
+
+wsReconnectBtn.addEventListener('click', wsReconnect);
+
 wsConnect();
 
-const peer = new Peer('amongussussybaka');
+peerInput.value = localStorage.getItem('peerid') ?? '';
 
-peer.on('open', id => {
-    peerIdText.innerText = id;
-});
+captureBtn.addEventListener('click', async () => {
+    if (captureBtn.innerText === 'Stop Streaming') {
+        location.reload();
+        return;
+    }
 
-peer.on('connection', conn => {
-    console.log('New connection');
-
-    conn.on('open', async () => {
-        console.log('Connection established, sending stream');
-
-        peer.call(conn.peer, streamDisplay.srcObject);
+    video.srcObject = await navigator.mediaDevices.getDisplayMedia({
+        audio: true,
+        video: { width: 1920, height: 1080 },
     });
 
-    conn.on('data', data => socket.send(JSON.stringify(data)));
+    captureBtn.innerText = 'Stop Streaming';
+    peerInput.style.display = 'none';
+    peerPlaceholder.style.display = 'revert';
+
+    localStorage.setItem('peerid', peerInput.value);
+    const peer = new Peer(peerInput.value);
+
+    peer.on('open', id => {
+        peerIdText.innerText = id;
+        peerIdText.style.display = 'revert';
+        peerPlaceholder.style.display = 'none';
+    });
+
+    peer.on('connection', conn => {
+        console.log('New connection');
+
+        conn.on('open', async () => {
+            console.log('Connection established, sending stream');
+
+            peer.call(conn.peer, video.srcObject);
+        });
+
+        conn.on('data', data => socket.send(JSON.stringify(data)));
+    });
 });
 
-peerId.addEventListener('click', () => {
-    navigator.clipboard.writeText(peerId.innerText);
-});
+peerIdText.addEventListener('click', () =>
+    navigator.clipboard.writeText(peerIdText.innerText)
+);

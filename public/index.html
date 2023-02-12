@@ -10,13 +10,21 @@
         <link href="./style.css" rel="stylesheet" />
     </head>
     <body>
-        <video id="stream" autoplay></video>
-        <div id="overlay-outer">
-            <div id="overlay-inner">
-                <button id="streamBtn">Start Stream</button>
-                <br /><br />
-                <div>Peer ID: <button id="peerId"></button></div>
-                <div id="wsStatus">WebSocket:</div>
+        <video id="video" autoplay></video>
+        <div id="overlay">
+            <button id="captureBtn">Start Stream</button>
+            <br />
+            <div>
+                WebSocket:
+                <span id="wsStatus"></span>
+                <button id="wsReconnect">Reconnect</button>
+            </div>
+            <br />
+            <div>
+                Peer ID:
+                <input id="peerInput" placeholder="random" spellcheck="false" />
+                <span id="peerPlaceholder">Requesting</span>
+                <button id="peerId"></button>
             </div>
         </div>
     </body>
