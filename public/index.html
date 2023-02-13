@@ -5,13 +5,16 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WebRTCast Host</title>
-        <script src="https://cdn.jsdelivr.net/npm/peerjs@1.4.7/dist/peerjs.min.js"></script>
+        <script
+            async
+            src="https://cdn.jsdelivr.net/npm/peerjs@1.4.7/dist/peerjs.min.js"
+        ></script>
         <script defer src="./host.js"></script>
         <link href="./style.css" rel="stylesheet" />
     </head>
     <body>
         <video id="video" autoplay></video>
-        <div id="overlay">
+        <main>
             <button id="captureBtn">Start Stream</button>
             <br />
             <div>
@@ -26,6 +29,6 @@
                 <span id="peerPlaceholder">Requesting</span>
                 <button id="peerId"></button>
             </div>
-        </div>
+        </main>
     </body>
 </html>

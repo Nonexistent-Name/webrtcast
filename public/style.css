@@ -31,19 +31,19 @@ button:hover {
     background-color: white;
 }
 
-#video {
-    position: absolute;
-    width: 100%;
-    filter: brightness(0.5) blur(0.25rem);
-}
-
-#overlay {
+main {
     position: absolute;
     padding: 2rem;
     border-radius: 0.5rem;
     color: white;
     background-color: rgb(40, 40, 40);
     z-index: 1;
+}
+
+#video {
+    position: absolute;
+    width: 100%;
+    filter: brightness(0.5) blur(0.25rem);
 }
 
 #captureBtn {
